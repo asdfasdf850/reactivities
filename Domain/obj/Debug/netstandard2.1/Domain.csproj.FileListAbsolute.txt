@@ -1,0 +1,9 @@
+/Users/asdf/Desktop/reactivities-app/Domain/bin/Debug/netstandard2.1/Domain.deps.json
+/Users/asdf/Desktop/reactivities-app/Domain/bin/Debug/netstandard2.1/Domain.dll
+/Users/asdf/Desktop/reactivities-app/Domain/bin/Debug/netstandard2.1/Domain.pdb
+/Users/asdf/Desktop/reactivities-app/Domain/obj/Debug/netstandard2.1/Domain.csprojAssemblyReference.cache
+/Users/asdf/Desktop/reactivities-app/Domain/obj/Debug/netstandard2.1/Domain.AssemblyInfoInputs.cache
+/Users/asdf/Desktop/reactivities-app/Domain/obj/Debug/netstandard2.1/Domain.AssemblyInfo.cs
+/Users/asdf/Desktop/reactivities-app/Domain/obj/Debug/netstandard2.1/Domain.csproj.CoreCompileInputs.cache
+/Users/asdf/Desktop/reactivities-app/Domain/obj/Debug/netstandard2.1/Domain.dll
+/Users/asdf/Desktop/reactivities-app/Domain/obj/Debug/netstandard2.1/Domain.pdb

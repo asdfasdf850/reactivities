@@ -1,0 +1,12 @@
+/Users/asdf/Desktop/reactivities-app/Persistence/bin/Debug/netstandard2.0/Persistence.deps.json
+/Users/asdf/Desktop/reactivities-app/Persistence/bin/Debug/netstandard2.0/Persistence.dll
+/Users/asdf/Desktop/reactivities-app/Persistence/bin/Debug/netstandard2.0/Persistence.pdb
+/Users/asdf/Desktop/reactivities-app/Persistence/bin/Debug/netstandard2.0/Domain.dll
+/Users/asdf/Desktop/reactivities-app/Persistence/bin/Debug/netstandard2.0/Domain.pdb
+/Users/asdf/Desktop/reactivities-app/Persistence/obj/Debug/netstandard2.0/Persistence.csprojAssemblyReference.cache
+/Users/asdf/Desktop/reactivities-app/Persistence/obj/Debug/netstandard2.0/Persistence.AssemblyInfoInputs.cache
+/Users/asdf/Desktop/reactivities-app/Persistence/obj/Debug/netstandard2.0/Persistence.AssemblyInfo.cs
+/Users/asdf/Desktop/reactivities-app/Persistence/obj/Debug/netstandard2.0/Persistence.csproj.CoreCompileInputs.cache
+/Users/asdf/Desktop/reactivities-app/Persistence/obj/Debug/netstandard2.0/Persistence.csproj.CopyComplete
+/Users/asdf/Desktop/reactivities-app/Persistence/obj/Debug/netstandard2.0/Persistence.dll
+/Users/asdf/Desktop/reactivities-app/Persistence/obj/Debug/netstandard2.0/Persistence.pdb

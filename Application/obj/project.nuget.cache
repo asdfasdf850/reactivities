@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "GgeeJR8sIQ5junP8plv7128+fD0lcJfSuX2e9gTYizftBP1r30NxGpQTWfVLsEOya1cxvWLjdzH4ppzqIqiqkA==",
+  "dgSpecHash": "CmWJfCNiKmK8RSR2CN8/8+uYVMfU4UTLvaHWDli/qHO/BR8WndFFtdC+UPDHpflx4Kt9h2QVUMSy2gnjsb1JDg==",
   "success": true,
   "projectFilePath": "/Users/asdf/Desktop/reactivities-app/Application/Application.csproj",
   "expectedPackageFiles": [
+    "/Users/asdf/.nuget/packages/mediatr/7.0.0/mediatr.7.0.0.nupkg.sha512",
+    "/Users/asdf/.nuget/packages/mediatr.extensions.microsoft.dependencyinjection/7.0.0/mediatr.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
     "/Users/asdf/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.0/microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
     "/Users/asdf/.nuget/packages/microsoft.bcl.hashcode/1.1.0/microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
     "/Users/asdf/.nuget/packages/microsoft.data.sqlite.core/3.1.1/microsoft.data.sqlite.core.3.1.1.nupkg.sha512",

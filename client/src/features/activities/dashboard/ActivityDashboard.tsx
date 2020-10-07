@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, SyntheticEvent } from 'react'
 import { Grid } from 'semantic-ui-react'
 
 import { Activity } from 'app/models/activity'
@@ -15,7 +15,9 @@ interface Props {
   setSelectedActivity: (activity: Activity | null) => void
   handleCreateActivity: (activity: Activity) => void
   handleEditActivity: (activity: Activity) => void
-  handleDeleteActivity: (id: string) => void
+  handleDeleteActivity: (e: SyntheticEvent<HTMLButtonElement>, id: string) => void
+  submitting: boolean
+  target: string
 }
 
 const ActivityDashboard: FC<Props> = ({
@@ -27,7 +29,9 @@ const ActivityDashboard: FC<Props> = ({
   setSelectedActivity,
   handleCreateActivity,
   handleEditActivity,
-  handleDeleteActivity
+  handleDeleteActivity,
+  submitting,
+  target
 }) => {
   return (
     <Grid>
@@ -36,6 +40,8 @@ const ActivityDashboard: FC<Props> = ({
           activities={activities}
           handleSelectActivity={handleSelectActivity}
           handleDeleteActivity={handleDeleteActivity}
+          submitting={submitting}
+          target={target}
         />
       </Grid.Column>
       <Grid.Column width={6}>
@@ -53,6 +59,7 @@ const ActivityDashboard: FC<Props> = ({
             selectedActivity={selectedActivity!}
             handleCreateActivity={handleCreateActivity}
             handleEditActivity={handleEditActivity}
+            submitting={submitting}
           />
         )}
       </Grid.Column>

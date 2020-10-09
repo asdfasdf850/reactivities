@@ -11,7 +11,7 @@ const Navbar: FC = () => {
           <img src='/assets/logo.png' alt='logo' style={{ marginRight: 10 }} />
           Reactivities
         </Menu.Item>
-        <Menu.Item name='Activities' as={NavLink} to='/activities' />
+        <Menu.Item name='Activities' as={NavLink} exact to='/activities' />
         <Menu.Item as={NavLink} to='/createActivity'>
           <Button positive content='Create Activity' />
         </Menu.Item>

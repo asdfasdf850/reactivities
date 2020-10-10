@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "TLuX+SHnyEFzKrUqgzwMvDIEvTqGcEOPE2mj9vCgbsXKiRtF4U+ARp9Zpb8TptGlI8Xpfa3wGWG4DiOdDj+Jsw==",
+  "dgSpecHash": "9w/MnUY25APCaf9zJ7mKwjFBMNGi+GLFuESfcdBNFURkE/RRMvHl6Hvis7jVImoI1kqrXU92U/LxvzsGodGeOg==",
   "success": true,
   "projectFilePath": "/Users/asdf/Desktop/reactivities-app/Domain/Domain.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/asdf/.nuget/packages/microsoft.netcore.app.ref/3.0.0/microsoft.netcore.app.ref.3.0.0.nupkg.sha512",
+    "/Users/asdf/.nuget/packages/microsoft.aspnetcore.app.ref/3.0.1/microsoft.aspnetcore.app.ref.3.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

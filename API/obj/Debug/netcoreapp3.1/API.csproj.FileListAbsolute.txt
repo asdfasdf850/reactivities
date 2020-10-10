@@ -63,3 +63,7 @@
 /Users/asdf/Desktop/reactivities-app/API/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Design.dll
 /Users/asdf/Desktop/reactivities-app/API/bin/Debug/netcoreapp3.1/MediatR.dll
 /Users/asdf/Desktop/reactivities-app/API/bin/Debug/netcoreapp3.1/MediatR.Extensions.Microsoft.DependencyInjection.dll
+/Users/asdf/Desktop/reactivities-app/API/bin/Debug/netcoreapp3.1/FluentValidation.dll
+/Users/asdf/Desktop/reactivities-app/API/bin/Debug/netcoreapp3.1/FluentValidation.AspNetCore.dll
+/Users/asdf/Desktop/reactivities-app/API/bin/Debug/netcoreapp3.1/FluentValidation.DependencyInjectionExtensions.dll
+/Users/asdf/Desktop/reactivities-app/API/obj/Debug/netcoreapp3.1/API.MvcApplicationPartsAssemblyInfo.cs

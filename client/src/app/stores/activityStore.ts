@@ -3,6 +3,8 @@ import { createContext, SyntheticEvent } from 'react'
 
 import { Activity } from 'app/models/activity'
 import agent from 'app/api/agent'
+import { history } from '../../'
+import { toast } from 'react-toastify'
 
 configure({ enforceActions: 'always' })
 
@@ -18,10 +20,10 @@ class ActivityStore {
   }
 
   groupActivitiesByDate = (activities: Activity[]) => {
-    const sortedActivities = activities.sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
+    const sortedActivities = activities.sort((a, b) => a.date.getTime() - b.date.getTime())
     return Object.entries(
       sortedActivities.reduce((activities, activity) => {
-        const date = activity.date.split('T')[0]
+        const date = activity.date.toISOString().split('T')[0]
         activities[date] = activities[date] ? [...activities[date], activity] : [activity]
         return activities
       }, {} as Record<string, Activity[]>)
@@ -34,7 +36,7 @@ class ActivityStore {
       const activities = await agent.Activities.list()
       runInAction('loadActivities', () => {
         activities.forEach(act => {
-          act.date = act.date.split('.')[0]
+          act.date = new Date(act.date)
           this.activityRegistry.set(act.id, act)
         })
         this.loadingInitial = false
@@ -51,14 +53,18 @@ class ActivityStore {
     let activity = this.activityRegistry.get(id)
     if (activity) {
       this.activity = activity
+      return activity
     } else {
       this.loadingInitial = true
       try {
         activity = await agent.Activities.details(id)
         runInAction('loadActivity', () => {
+          activity.date = new Date(activity.date)
           this.activity = activity
+          this.activityRegistry.set(activity.id, activity)
           this.loadingInitial = false
         })
+        return activity
       } catch (error) {
         runInAction('loadActivityError', () => {
           this.loadingInitial = false
@@ -66,10 +72,6 @@ class ActivityStore {
         console.error(error)
       }
     }
-  }
-
-  @action clearActivity = () => {
-    this.activity = null
   }
 
   @action createActivity = async (activity: Activity) => {
@@ -80,11 +82,13 @@ class ActivityStore {
         this.activityRegistry.set(activity.id, activity)
         this.submitting = false
       })
+      history.push(`/activities/${activity.id}`)
     } catch (error) {
       runInAction('createActivityError', () => {
         this.submitting = false
       })
-      console.error(error)
+      toast.error('Problem submitting data')
+      console.error(error.response)
     }
   }
 
@@ -97,11 +101,13 @@ class ActivityStore {
         this.activity = activity
         this.submitting = false
       })
+      history.push(`/activities/${activity.id}`)
     } catch (error) {
       runInAction('editActivityError', () => {
         this.submitting = false
       })
-      console.error(error)
+      toast.error('Problem submitting data')
+      console.error(error.response)
     }
   }
 
@@ -122,6 +128,10 @@ class ActivityStore {
       })
       console.error(error)
     }
+  }
+
+  @action clearActivity = () => {
+    this.activity = null
   }
 }
 

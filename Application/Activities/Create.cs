@@ -6,12 +6,9 @@ using FluentValidation;
 using MediatR;
 using Persistence;
 
-namespace Application.Activities
-{
-   public class Create
-   {
-      public class Command : IRequest
-      {
+namespace Application.Activities {
+   public class Create {
+      public class Command : IRequest {
          public Guid Id { get; set; }
 
          public string Title { get; set; }
@@ -22,10 +19,8 @@ namespace Application.Activities
          public string Venue { get; set; }
       }
 
-      public class CommandValidator : AbstractValidator<Command>
-      {
-         public CommandValidator()
-         {
+      public class CommandValidator : AbstractValidator<Command> {
+         public CommandValidator() {
             RuleFor(x => x.Title).NotEmpty();
             RuleFor(x => x.Description).NotEmpty();
             RuleFor(x => x.Category).NotEmpty();
@@ -35,18 +30,14 @@ namespace Application.Activities
          }
       }
 
-      public class Handler : IRequestHandler<Command>
-      {
+      public class Handler : IRequestHandler<Command> {
          private readonly DataContext _context;
-         public Handler(DataContext context)
-         {
+         public Handler(DataContext context) {
             _context = context;
          }
 
-         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
-         {
-            var activity = new Activity
-            {
+         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken) {
+            var activity = new Activity {
                Id = request.Id,
                Title = request.Title,
                Description = request.Description,

@@ -88,3 +88,7 @@
 /Users/asdf/Desktop/reactivities-app/API/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Users/asdf/Desktop/reactivities-app/API/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.dll
 /Users/asdf/Desktop/reactivities-app/API/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/asdf/Desktop/reactivities-app/API/bin/Debug/netcoreapp3.1/AutoMapper.dll
+/Users/asdf/Desktop/reactivities-app/API/bin/Debug/netcoreapp3.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+/Users/asdf/Desktop/reactivities-app/API/bin/Debug/netcoreapp3.1/Castle.Core.dll
+/Users/asdf/Desktop/reactivities-app/API/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Proxies.dll

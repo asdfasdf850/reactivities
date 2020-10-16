@@ -7,13 +7,13 @@ import { v4 as uuid } from 'uuid'
 import { combineValidators, composeValidators, hasLengthGreaterThan, isRequired } from 'revalidate'
 
 import { ActivityFormValues } from 'app/models/activity'
-import ActivityStore from 'app/stores/activityStore'
 import TextInput from 'app/common/form/TextInput'
 import TextAreaInput from 'app/common/form/TextAreaInput'
 import SelectInput from 'app/common/form/SelectInput'
 import { category } from 'app/common/options/categoryOptions'
 import DateInput from 'app/common/form/DateInput'
 import { combineDateAndTime } from 'app/common/util/util'
+import { RootStoreContext } from 'app/stores/rootStore'
 
 interface DetailParams {
   id: string
@@ -33,8 +33,8 @@ const validate = combineValidators({
 })
 
 const ActivityForm: FC<RouteComponentProps<DetailParams>> = ({ match, history }) => {
-  const activityStore = useContext(ActivityStore)
-  const { submitting, loadActivity, createActivity, editActivity } = activityStore
+  const rootStore = useContext(RootStoreContext)
+  const { submitting, loadActivity, createActivity, editActivity } = rootStore.activityStore
 
   const [activity, setActivity] = useState(new ActivityFormValues())
   const [loading, setLoading] = useState(false)

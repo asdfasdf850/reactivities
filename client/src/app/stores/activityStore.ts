@@ -1,16 +1,21 @@
-import { action, computed, observable, configure, runInAction } from 'mobx'
-import { createContext, SyntheticEvent } from 'react'
+import { action, computed, observable, runInAction } from 'mobx'
+import { toast } from 'react-toastify'
+import { SyntheticEvent } from 'react'
 
-import { Activity } from 'app/models/activity'
+import { IActivity } from 'app/models/activity'
 import agent from 'app/api/agent'
 import { history } from '../../'
-import { toast } from 'react-toastify'
+import { RootStore } from './rootStore'
 
-configure({ enforceActions: 'always' })
+export default class ActivityStore {
+  rootStore: RootStore
 
-class ActivityStore {
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore
+  }
+
   @observable activityRegistry = new Map()
-  @observable activity: Activity | null = null
+  @observable activity: IActivity | null = null
   @observable loadingInitial = false
   @observable submitting = false
   @observable target = ''
@@ -19,14 +24,14 @@ class ActivityStore {
     return this.groupActivitiesByDate(Array.from(this.activityRegistry.values()))
   }
 
-  groupActivitiesByDate = (activities: Activity[]) => {
+  groupActivitiesByDate = (activities: IActivity[]) => {
     const sortedActivities = activities.sort((a, b) => a.date.getTime() - b.date.getTime())
     return Object.entries(
       sortedActivities.reduce((activities, activity) => {
         const date = activity.date.toISOString().split('T')[0]
         activities[date] = activities[date] ? [...activities[date], activity] : [activity]
         return activities
-      }, {} as Record<string, Activity[]>)
+      }, {} as Record<string, IActivity[]>)
     )
   }
 
@@ -74,7 +79,7 @@ class ActivityStore {
     }
   }
 
-  @action createActivity = async (activity: Activity) => {
+  @action createActivity = async (activity: IActivity) => {
     this.submitting = true
     try {
       await agent.Activities.create(activity)
@@ -92,7 +97,7 @@ class ActivityStore {
     }
   }
 
-  @action editActivity = async (activity: Activity) => {
+  @action editActivity = async (activity: IActivity) => {
     this.submitting = true
     try {
       await agent.Activities.update(activity)
@@ -134,5 +139,3 @@ class ActivityStore {
     this.activity = null
   }
 }
-
-export default createContext(new ActivityStore())

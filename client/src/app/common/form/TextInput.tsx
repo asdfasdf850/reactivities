@@ -7,7 +7,7 @@ interface Props extends FieldRenderProps<string, HTMLElement>, FormFieldProps {}
 const TextInput: FC<Props> = ({ input, width, type, placeholder, meta: { touched, error } }) => {
   return (
     <Form.Field error={touched && !!error} type={type} width={width}>
-      <input {...input} placeholder={placeholder} />
+      <input {...input} placeholder={placeholder} autoComplete='off' />
       {touched && error && (
         <Label basic color='red'>
           {error}

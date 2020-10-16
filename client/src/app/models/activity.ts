@@ -1,4 +1,4 @@
-export interface Activity {
+export interface IActivity {
   id: string
   title: string
   description: string
@@ -8,7 +8,7 @@ export interface Activity {
   venue: string
 }
 
-export interface IActivityFormValues extends Partial<Activity> {
+export interface IActivityFormValues extends Partial<IActivity> {
   time?: Date
 }
 

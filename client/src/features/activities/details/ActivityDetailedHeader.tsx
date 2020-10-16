@@ -4,10 +4,10 @@ import { observer } from 'mobx-react-lite'
 import { Segment, Item, Header, Button, Image } from 'semantic-ui-react'
 import { format } from 'date-fns'
 
-import { Activity } from 'app/models/activity'
+import { IActivity } from 'app/models/activity'
 
 interface Props {
-  activity: Activity
+  activity: IActivity
 }
 
 const activityImageStyle = {

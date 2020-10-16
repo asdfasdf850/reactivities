@@ -1,10 +1,20 @@
 import axios, { AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
 
-import { Activity } from 'app/models/activity'
+import { IActivity } from 'app/models/activity'
 import { history } from '../../'
+import { IUser, IUserFormValues } from 'app/models/user'
 
 axios.defaults.baseURL = `http://localhost:5000/api`
+
+axios.interceptors.request.use(
+  config => {
+    const token = window.localStorage.getItem('jwt')
+    if (token) config.headers.Authorization = `Bearer ${token}`
+    return config
+  },
+  error => Promise.reject(error)
+)
 
 axios.interceptors.response.use(undefined, error => {
   if (error.message === 'Network error' && !error.response) {
@@ -20,7 +30,7 @@ axios.interceptors.response.use(undefined, error => {
   if (status === 500) {
     toast.error('Server error - check the terminal for more info!')
   }
-  throw error
+  throw error.response
 })
 
 const responseBody = (response: AxiosResponse) => response.data
@@ -36,13 +46,20 @@ const requests = {
 }
 
 const Activities = {
-  list: (): Promise<Activity[]> => requests.get(`/activities`),
+  list: (): Promise<IActivity[]> => requests.get(`/activities`),
   details: (id: string) => requests.get(`/activities/${id}`),
-  create: (activity: Activity) => requests.post(`/activities`, activity),
-  update: (activity: Activity) => requests.put(`/activities/${activity.id}`, activity),
+  create: (IActivity: IActivity) => requests.post(`/activities`, IActivity),
+  update: (IActivity: IActivity) => requests.put(`/activities/${IActivity.id}`, IActivity),
   delete: (id: string) => requests.delete(`/activities/${id}`)
 }
 
+const User = {
+  currentUser: (): Promise<IUser> => requests.get('/user'),
+  login: (user: IUserFormValues): Promise<IUser> => requests.post(`/user/login`, user),
+  register: (user: IUserFormValues): Promise<IUser> => requests.post(`/user/register`, user)
+}
+
 export default {
-  Activities
+  Activities,
+  User
 }

@@ -3,17 +3,13 @@ import { Link } from 'react-router-dom'
 import { Button, Icon, Item, Segment } from 'semantic-ui-react'
 import { format } from 'date-fns'
 
-import { Activity } from 'app/models/activity'
-// import ActivityStore from 'app/stores/activityStore'
+import { IActivity } from 'app/models/activity'
 
 interface Props {
-  activity: Activity
+  activity: IActivity
 }
 
 const ActivityListItem: FC<Props> = ({ activity }) => {
-  // const activityStore = useContext(ActivityStore)
-  // const { activitiesByDate, submitting, deleteActivity, target } = activityStore
-
   return (
     <Segment.Group>
       <Segment>

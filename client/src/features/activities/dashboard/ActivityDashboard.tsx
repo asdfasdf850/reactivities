@@ -8,13 +8,11 @@ import { RootStoreContext } from 'app/stores/rootStore'
 
 const ActivityDashboard: FC = () => {
   const rootStore = useContext(RootStoreContext)
-  const { loadActivities, loadingInitial, activityRegistry } = rootStore.activityStore
+  const { loadActivities, loadingInitial } = rootStore.activityStore
 
   useEffect(() => {
-    if (activityRegistry.size > 0) return
-
     loadActivities()
-  }, [loadActivities, activityRegistry.size])
+  }, [loadActivities])
 
   if (loadingInitial) return <LoadingComponent content='Loading activities...' />
 

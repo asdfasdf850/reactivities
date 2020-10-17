@@ -50,7 +50,9 @@ const Activities = {
   details: (id: string) => requests.get(`/activities/${id}`),
   create: (IActivity: IActivity) => requests.post(`/activities`, IActivity),
   update: (IActivity: IActivity) => requests.put(`/activities/${IActivity.id}`, IActivity),
-  delete: (id: string) => requests.delete(`/activities/${id}`)
+  delete: (id: string) => requests.delete(`/activities/${id}`),
+  attend: (id: string) => requests.post(`/activities/${id}/attend`, {}),
+  unattend: (id: string) => requests.delete(`/activities/${id}/attend`)
 }
 
 const User = {

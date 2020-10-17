@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Application.Activities
-{
+namespace Application.Activities {
 
-    public class ActivityDto
-    {
+    public class ActivityDto {
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

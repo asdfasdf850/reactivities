@@ -1,4 +1,3 @@
-using System;
 using System.Text;
 using Application.Activities;
 using Application.Interfaces;
@@ -6,9 +5,9 @@ using API.Middleware;
 using AutoMapper;
 using Domain;
 using FluentValidation.AspNetCore;
+using Infrastructure.Photos;
 using Infrastructure.Security;
 using MediatR;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -22,29 +21,22 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Persistence;
 
-namespace API
-{
-   public class Startup
-   {
-      public Startup(IConfiguration configuration)
-      {
+namespace API {
+   public class Startup {
+      public Startup(IConfiguration configuration) {
          Configuration = configuration;
       }
 
       public IConfiguration Configuration { get; }
 
-      public void ConfigureServices(IServiceCollection services)
-      {
-         services.AddDbContext<DataContext>(opt =>
-         {
+      public void ConfigureServices(IServiceCollection services) {
+         services.AddDbContext<DataContext>(opt => {
             opt.UseLazyLoadingProxies();
             opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
          });
 
-         services.AddCors(opt =>
-         {
-            opt.AddPolicy("CorsPolicy", policy =>
-            {
+         services.AddCors(opt => {
+            opt.AddPolicy("CorsPolicy", policy => {
                policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
             });
          });
@@ -52,13 +44,11 @@ namespace API
          services.AddMediatR(typeof(List.Handler).Assembly);
          services.AddAutoMapper(typeof(List.Handler));
 
-         services.AddControllers(opt =>
-            {
+         services.AddControllers(opt => {
                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                opt.Filters.Add(new AuthorizeFilter(policy));
             })
-            .AddFluentValidation(cfg =>
-            {
+            .AddFluentValidation(cfg => {
                cfg.RegisterValidatorsFromAssemblyContaining<Create>();
             });
 
@@ -67,10 +57,8 @@ namespace API
          identityBuiler.AddEntityFrameworkStores<DataContext>();
          identityBuiler.AddSignInManager<SignInManager<AppUser>>();
 
-         services.AddAuthorization(opt =>
-         {
-            opt.AddPolicy("IsActivityHost", policy =>
-            {
+         services.AddAuthorization(opt => {
+            opt.AddPolicy("IsActivityHost", policy => {
                policy.Requirements.Add(new IsHostRequirement());
             });
          });
@@ -80,10 +68,8 @@ namespace API
          var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
 
          services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(opts =>
-            {
-               opts.TokenValidationParameters = new TokenValidationParameters
-               {
+            .AddJwtBearer(opts => {
+               opts.TokenValidationParameters = new TokenValidationParameters {
                ValidateIssuerSigningKey = true,
                IssuerSigningKey = key,
                ValidateAudience = false,
@@ -93,13 +79,13 @@ namespace API
 
          services.AddScoped<IJwtGenerator, JwtGenerator>();
          services.AddScoped<IUserAccessor, UserAccessor>();
+         services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+         services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
       }
 
-      public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-      {
+      public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
          app.UseMiddleware<ErrorHandlingMiddleware>();
-         if (env.IsDevelopment())
-         {
+         if (env.IsDevelopment()) {
             // app.UseDeveloperExceptionPage();
          }
          //  app.UseHttpsRedirection();
@@ -107,8 +93,7 @@ namespace API
          app.UseCors("CorsPolicy");
          app.UseAuthentication();
          app.UseAuthorization();
-         app.UseEndpoints(endpoints =>
-         {
+         app.UseEndpoints(endpoints => {
             endpoints.MapControllers();
          });
       }

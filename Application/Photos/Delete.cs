@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,40 +9,47 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.Activities {
-    public class Unattend {
+namespace Application.Photos {
+
+    public class Delete {
+
         public class Command : IRequest {
-            public Guid Id { get; set; }
+            public string Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Command> {
             private readonly DataContext _context;
+            private readonly IPhotoAccessor _photoAccessor;
             private readonly IUserAccessor _userAccessor;
 
-            public Handler(DataContext context, IUserAccessor userAccessor) {
+            public Handler(DataContext context, IUserAccessor userAccessor, IPhotoAccessor photoAccessor) {
                 _context = context;
                 _userAccessor = userAccessor;
+                _photoAccessor = photoAccessor;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken) {
-                var activity = await _context.Activities.FindAsync(request.Id);
-
-                if (activity == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { Activity = "Could not find activity" });
 
                 var user = await _context.Users
                     .SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
 
-                var attendance = await _context.UserActivities
-                    .SingleOrDefaultAsync(x => x.ActivityId == activity.Id && x.AppUserId == user.Id);
+                var photo = user.Photos.FirstOrDefault(x => x.Id == request.Id);
 
-                if (attendance == null)
-                    return Unit.Value;
+                if (photo == null) {
+                    throw new RestException(HttpStatusCode.NotFound, new { Photo = "Not found" });
+                }
 
-                if (attendance.IsHost)
-                    throw new RestException(HttpStatusCode.BadRequest, new { Attendance = "You cannot remove yourself as host" });
+                if (photo.IsMain) {
+                    throw new RestException(HttpStatusCode.BadRequest, new { Photo = "You cannot delete your main photo" });
+                }
 
-                _context.UserActivities.Remove(attendance);
+                var result = _photoAccessor.DeletePhoto(photo.Id);
+
+                if (result == null) {
+                    throw new Exception("Problem deleting photo");
+                }
+
+                user.Photos.Remove(photo);
 
                 var success = await _context.SaveChangesAsync() > 0;
 

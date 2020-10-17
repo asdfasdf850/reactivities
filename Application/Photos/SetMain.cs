@@ -1,18 +1,20 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Errors;
 using Application.Interfaces;
-using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.Activities {
-    public class Attend {
+namespace Application.Photos {
+
+    public class SetMain {
+
         public class Command : IRequest {
-            public Guid Id { get; set; }
+            public string Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Command> {
@@ -20,33 +22,24 @@ namespace Application.Activities {
             private readonly IUserAccessor _userAccessor;
 
             public Handler(DataContext context, IUserAccessor userAccessor) {
-                _context = context;
                 _userAccessor = userAccessor;
+                _context = context;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken) {
-                var activity = await _context.Activities.FindAsync(request.Id);
-
-                if (activity == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { Activity = "Could not find activity" });
-
                 var user = await _context.Users
                     .SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
 
-                var attendance = await _context.UserActivities
-                    .SingleOrDefaultAsync(x => x.ActivityId == activity.Id && x.AppUserId == user.Id);
+                var photo = user.Photos.FirstOrDefault(x => x.Id == request.Id);
 
-                if (attendance != null)
-                    throw new RestException(HttpStatusCode.BadRequest, new { Attendance = "Already attending this activity" });
+                if (photo == null) {
+                    throw new RestException(HttpStatusCode.NotFound, new { Photo = "Not found" });
+                }
 
-                attendance = new UserActivity {
-                    Activity = activity,
-                    AppUser = user,
-                    IsHost = false,
-                    DateJoined = DateTime.Now
-                };
+                var currentMain = user.Photos.FirstOrDefault(x => x.IsMain);
 
-                _context.UserActivities.Add(attendance);
+                currentMain.IsMain = false;
+                photo.IsMain = true;
 
                 var success = await _context.SaveChangesAsync() > 0;
 

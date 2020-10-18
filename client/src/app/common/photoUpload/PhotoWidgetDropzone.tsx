@@ -1,1 +1,48 @@
-export default () => console.log('asdf')
+import React, { FC, useCallback } from 'react'
+import { useDropzone } from 'react-dropzone'
+import { Header, Icon } from 'semantic-ui-react'
+
+interface Props {
+  setFiles: (files: object[]) => void
+}
+
+const dropzoneStyles = {
+  border: 'dashed 3px',
+  borderColor: '#eee',
+  borderRadius: '5px',
+  paddingTop: '30px',
+  textAlign: 'center' as 'center',
+  height: '200px',
+  transition: 'all 0.2s'
+}
+
+const dropzoneActive = {
+  borderColor: 'green'
+}
+
+const PhotoWidgetDropzone: FC<Props> = ({ setFiles }) => {
+  const onDrop = useCallback(
+    acceptedFiles => {
+      setFiles(
+        acceptedFiles.map((file: object) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file)
+          })
+        )
+      )
+    },
+    [setFiles]
+  )
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+
+  return (
+    <div {...getRootProps()} style={isDragActive ? { ...dropzoneStyles, ...dropzoneActive } : dropzoneStyles}>
+      <input {...getInputProps()} />
+      <Icon name='upload' size='huge' />
+      <Header content='Drop image here' />
+    </div>
+  )
+}
+
+export default PhotoWidgetDropzone

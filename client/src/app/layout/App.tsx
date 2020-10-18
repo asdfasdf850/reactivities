@@ -11,9 +11,9 @@ import HomePage from 'features/home/HomePage'
 import ActivityForm from 'features/activities/form/ActivityForm'
 import ActivityDetails from 'features/activities/details/ActivityDetails'
 import NotFound from './NotFound'
-import LoginForm from 'features/user/LoginForm'
 import LoadingComponent from './LoadingComponent'
 import ModalContainer from 'app/common/modals/ModalContainer'
+import ProfilePage from 'features/profiles/ProfilePage'
 
 function App() {
   const location = useLocation()
@@ -50,7 +50,7 @@ function App() {
                   component={ActivityForm}
                   key={location.key}
                 />
-                <Route path='/login' component={LoginForm} />
+                <Route path='/profile/:username' component={ProfilePage} />
                 <Route component={NotFound} />
               </Switch>
             </Container>
